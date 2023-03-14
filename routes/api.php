@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,14 @@ Route::prefix('auth')->group(function()
     Route::post('login',[AuthController::class,'login']);
     Route::post('logout',[AuthController::class,'logout'])->middleware('auth:api');
 
+});
+Route::prefix('client')->group(function()
+{
+    Route::post('add',[ClientController::class,'add'])->middleware('auth:api');;
+    Route::post('update',[ClientController::class,'update'])->middleware('auth:api');;
+    Route::delete('delete',[ClientController::class,'delete'])->middleware('auth:api');
+    Route::get('',[ClientController::class,'fetch'])->middleware('auth:api');
+    Route::get('all',[ClientController::class,'all'])->middleware('auth:api');
 });
 Route::prefix('account')->group(function()
 {
