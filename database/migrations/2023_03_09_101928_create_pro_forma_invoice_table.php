@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('shipment_date');
             $table->string('currency');
             $table->float('total_bill',8,2);
+            $table->string('reference_number');
             $table->timestamps();
         });
     }

@@ -21,4 +21,10 @@ class ItemJobOrder extends Model
         'created_at',
         'updated_at',
     ];
+    public function user(){
+        return $this->HasOne(Item::class);
+    }
+    public function job_order(){
+        return $this->HasOne(JobOrder::class);
+    }
 }

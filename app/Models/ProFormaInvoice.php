@@ -14,10 +14,10 @@ class ProFormaInvoice extends Model
 
     protected $fillable = [
         'client_id',
+        'reference_number',
         'shipment_Date',
         'currency',
         'total_bill'
-
     ];
     protected $hidden = [
         'created_at',

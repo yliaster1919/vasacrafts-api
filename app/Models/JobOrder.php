@@ -12,12 +12,11 @@ class JobOrder extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-
         'client_id',
         'date_release',
         'contact_num',
         'delivery_address',
-        'pfi_reference_number',
+        'pfi_id',
         'shipment_date',
         'approved_by',
     ];
