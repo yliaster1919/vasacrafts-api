@@ -435,7 +435,6 @@ class AuthenticationTest extends TestCase
             'password' => '12345678',
         ]);
         $response->assertStatus(200);
-  
         $token = $user->createToken('Bearer Token')->accessToken;
         $response = $this->withHeaders(['Authorization' => 'Bearer '.$token])
                     ->actingAs($user)->post('api/auth/logout');
