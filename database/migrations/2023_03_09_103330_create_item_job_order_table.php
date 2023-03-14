@@ -28,6 +28,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('item_job_order');
+        Schema::table('item_job_orders', function (Blueprint $table){
+            $table->dropForeign(['job_order_id']);
+            $table->dropForeign(['item_id']);
+            $table->dropColumn(['job_order_id']);
+            $table->dropColumn(['item_id']);
+        });
+        Schema::dropIfExists('item_job_orders');
     }
 };

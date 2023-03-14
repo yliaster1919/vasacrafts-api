@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('job_orders', function (Blueprint $table) {
+        Schema::create('pro_forma_invoice', function (Blueprint $table) {
             $table->id();
             $table->integer('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->string('date_release');
-            $table->string('contact_num');
-            $table->string('delivery_address');
-            $table->integer('pfi_id');
-            $table->foreign('pfi_id')->references('id')->on('pro_forma_invoice');
             $table->string('shipment_date');
-            $table->string('approved_by');
-            $table->float('total_units',8,2);
+            $table->string('currency');
+            $table->float('total_bill',8,2);
             $table->timestamps();
         });
     }
@@ -32,12 +27,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('job_orders', function (Blueprint $table){
+        Schema::table('pro_forma_invoice', function (Blueprint $table){
             $table->dropForeign(['client_id']);
-            $table->dropForeign(['pfi_id']);
             $table->dropColumn(['client_id']);
-            $table->dropColumn(['pfi_id']);    
         });    
-        Schema::dropIfExists('job_orders');
+        Schema::dropIfExists('pro_forma_invoice');
     }
 };

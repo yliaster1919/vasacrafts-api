@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('collection_receipt', function (Blueprint $table) {
             $table->id();
-            $table->string('item_code');
-            $table->string('photo');
-            $table->string('description');
-            $table->string('dimensions');
-            $table->string('finish');
-            $table->float('unit_points',8,2);
+            $table->string('description_of_goods');
+            $table->float('price',8,2);
+            $table->float('fees',8,2);
             $table->timestamps();
         });
     }
@@ -28,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+          
+        Schema::dropIfExists('collection_receipt');
     }
 };

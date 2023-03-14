@@ -20,9 +20,9 @@ class AuthController extends Controller
             "last_name" => 'required|string|regex:/^[a-zA-Z\s]*$/',
             "email" => 'required|unique:users|email',
             "password" => 'required|min:8|',
-            "contact_num" => 'string',
-            "address" => 'string',
-            "profile_image" => 'file|image|max:10000',
+            "contact_num" => 'string|nullable',
+            "address" => 'string|nullable',
+            "profile_image" => 'file|max:10000|nullable',
         ]);
         if($validator->fails())
         {
@@ -85,6 +85,13 @@ class AuthController extends Controller
             ],401);
         }
         $user = User::Where('email','=',$request->email)->first();
+        if(is_NULL($user))
+        {
+            return response()->json([
+                'Message' => 'Login failed',
+                'Error' => 'Email not registered.',    
+            ],401);     
+        }
         $isadmin = User::Where('id','=',$user->id)->pluck('is_admin')->first();
         if($isadmin)
         {
@@ -104,7 +111,7 @@ class AuthController extends Controller
                     return response()->json([
                         "Message" => 'Login failed',
                         "Error" => 'Invalid credentials'
-                    ]);
+                    ],401);
                 }
             }
             else
@@ -133,7 +140,7 @@ class AuthController extends Controller
                     return response()->json([
                         "Message" => 'Login failed',
                         "Error" => 'Invalid credentials'
-                    ]);
+                    ],401);
                 }
             }
             else
@@ -144,6 +151,14 @@ class AuthController extends Controller
                 ]);
             }    
         }
+    }
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json([
+            'Data' => 'Access token revoked',
+            'Message' => 'You have been successfully logged out.'
+        ]);
     }
 
     public function verify_email($id, $hash)

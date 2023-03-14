@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -19,13 +20,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-route::prefix('auth')->group(function()
+Route::prefix('auth')->group(function()
 {
     Route::post('signup',[AuthController::class,'sign_up']);
     Route::post('login',[AuthController::class,'login']);
-    Route::post('logoout',[AuthController::class,'logout'])->middleware('auth:api');
+    Route::post('logout',[AuthController::class,'logout'])->middleware('auth:api');
 
 });
+Route::prefix('account')->group(function()
+{
+    Route::post('{id}/update',[AccountController::class,'update'])->middleware('auth:api');
+});
+
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');

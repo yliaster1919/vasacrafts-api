@@ -30,6 +30,6 @@ class Account extends Model
         'email_verified_at' => 'datetime',
     ];
     public function user(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }
